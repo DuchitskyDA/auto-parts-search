@@ -3,6 +3,8 @@
 React + Redux Toolkit + Bootstrap, без TypeScript. API — веб-сервис «Проценка»:
 https://lk.favorit-parts.ru/static/wsprice.pdf
 
+**Демо:** https://parts-search.62-83-8-181.sslip.io/ — например, артикул `01089`.
+
 ## Запуск
 
 ```bash
@@ -35,3 +37,4 @@ npm run check:api  # прогон клиента против живого API
 - `src/normalize.js` — ответ API → список производителей / строки таблицы
 - `src/searchSlice.js` — состояние и thunk'и
 - `src/components/` — форма, список производителей, таблица, лоадер, ошибка
+- `deploy/` — статика за reverse proxy: `compose.yaml` и `ship.sh` (тесты, сборка, выкладка по SSH)

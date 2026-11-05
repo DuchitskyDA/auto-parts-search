@@ -1,0 +1,17 @@
+# Статика собранного фронтенда. Сервер ничего не хранит: данные приходят из API Favorit прямо в браузер.
+# Наружу порт не публикуется — до контейнера доходит только общий reverse proxy по сети core-net.
+# Выкладка: deploy/ship.sh. Удаление: docker compose -f /opt/partsearch/compose.yaml down.
+services:
+  core-partsearch:
+    image: core-proxy:2.11.4-ca20261020
+    container_name: core-partsearch
+    restart: unless-stopped
+    command: ["caddy", "file-server", "--root", "/srv", "--listen", ":80"]
+    read_only: true
+    volumes:
+      - /opt/partsearch/dist:/srv:ro
+    networks: [core-net]
+    mem_limit: 64m
+networks:
+  core-net:
+    external: true
