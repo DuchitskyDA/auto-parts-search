@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOffers } from '../searchSlice';
 import { formatPrice, formatShipment } from '../format';
@@ -5,6 +6,8 @@ import Loader from './Loader';
 import ErrorAlert from './ErrorAlert';
 
 const COLUMNS = 6;
+// API отдаёт все предложения одним ответом; рисуем аналоги порциями, чтобы таблицу можно было читать.
+export const PAGE_SIZE = 50;
 
 export default function OffersTable() {
   const { selected, offers } = useSelector((state) => state.search);
@@ -20,7 +23,8 @@ export default function OffersTable() {
         </h2>
         {count > 0 && <span className="panel__meta">{count} предложений</span>}
       </div>
-      <OffersBody />
+      {/* key: новый запрос — новая выдача, показ снова с первой порции */}
+      <OffersBody key={offers.requestId} />
     </section>
   );
 }
@@ -28,6 +32,7 @@ export default function OffersTable() {
 function OffersBody() {
   const dispatch = useDispatch();
   const { selected, offers } = useSelector((state) => state.search);
+  const [limit, setLimit] = useState(PAGE_SIZE);
 
   if (offers.status === 'loading') return <Loader text="Ищем предложения и аналоги…" />;
   if (offers.status === 'failed') {
@@ -43,30 +48,46 @@ function OffersBody() {
 
   const requested = offers.items.filter((offer) => offer.isRequested);
   const analogues = offers.items.filter((offer) => !offer.isRequested);
+  const shown = analogues.slice(0, limit);
+  const rest = analogues.length - shown.length;
 
   return (
-    <div className="table-responsive">
-      <table className="offers table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">Производитель</th>
-            <th scope="col">Наименование</th>
-            <th scope="col">Склад</th>
-            <th scope="col">Отгрузка</th>
-            <th scope="col" className="num">
-              Остаток
-            </th>
-            <th scope="col" className="num">
-              Цена
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <OfferGroup title="Искомая деталь" offers={requested} />
-          <OfferGroup title={`Аналоги · ${analogues.length}`} offers={analogues} />
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className="table-responsive">
+        <table className="offers table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Производитель</th>
+              <th scope="col">Наименование</th>
+              <th scope="col">Склад</th>
+              <th scope="col">Отгрузка</th>
+              <th scope="col" className="num">
+                Остаток
+              </th>
+              <th scope="col" className="num">
+                Цена
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <OfferGroup title="Искомая деталь" offers={requested} />
+            <OfferGroup title={`Аналоги · ${analogues.length}`} offers={shown} />
+          </tbody>
+        </table>
+      </div>
+      {analogues.length > PAGE_SIZE && (
+        <div className="offers__more">
+          <span className="panel__meta">
+            Показано {shown.length} из {analogues.length} аналогов
+          </span>
+          {rest > 0 && (
+            <button type="button" className="btn btn-outline-dark" onClick={() => setLimit(limit + PAGE_SIZE)}>
+              Показать ещё {Math.min(PAGE_SIZE, rest)}
+            </button>
+          )}
+        </div>
+      )}
+    </>
   );
 }
 
