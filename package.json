@@ -18,7 +18,10 @@
     "react-redux": "9.1.2"
   },
   "devDependencies": {
+    "@testing-library/dom": "10.4.0",
+    "@testing-library/react": "16.0.1",
     "@vitejs/plugin-react": "4.3.1",
+    "jsdom": "25.0.1",
     "vite": "5.4.8",
     "vitest": "2.1.2"
   }
