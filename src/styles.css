@@ -1,0 +1,369 @@
+/* Токены поверх Bootstrap: графит, сталь, сигнальный янтарь. Артикулы и числа — моноширинным. */
+:root {
+  --ink: #1b2430;
+  --ink-soft: #5b6675;
+  --steel: #f3f5f7;
+  --line: #dde2e8;
+  --signal: #e8a317;
+  --in-stock: #1e7f4f;
+  --no-stock: #8a94a3;
+
+  --bs-body-font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --bs-font-monospace: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', monospace;
+  --bs-body-color: var(--ink);
+  --bs-body-bg: var(--steel);
+  --bs-border-color: var(--line);
+  --bs-secondary-color: var(--ink-soft);
+}
+
+body {
+  background: var(--steel);
+  font-size: 0.9375rem;
+}
+
+.mono {
+  font-family: var(--bs-font-monospace);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Шапка */
+.app-bar {
+  background: var(--ink);
+  color: #fff;
+}
+
+.app-bar__title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.app-bar__note {
+  color: #aab3bf;
+  font-size: 0.8125rem;
+}
+
+/* Карточки блоков */
+.panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgb(27 36 48 / 0.04);
+}
+
+.panel__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.panel__title {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.panel__meta {
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.panel__body {
+  padding: 1rem;
+}
+
+/* Поиск: артикул как бирка на детали */
+.search__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.search__input {
+  font-family: var(--bs-font-monospace);
+  font-size: 1.25rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.search__input::placeholder {
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--no-stock);
+}
+
+.form-control,
+.form-control:focus {
+  background-color: #fff;
+}
+
+.form-control:focus {
+  border-color: var(--signal);
+  box-shadow: 0 0 0 0.2rem rgb(232 163 23 / 0.25);
+}
+
+.btn-ink {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--ink);
+  --bs-btn-border-color: var(--ink);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #2c3848;
+  --bs-btn-hover-border-color: #2c3848;
+  --bs-btn-active-bg: #111821;
+  --bs-btn-focus-shadow-rgb: 232, 163, 23;
+  padding-inline: 1.5rem;
+  font-weight: 500;
+}
+
+.search__hint {
+  margin-top: 0.5rem;
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+}
+
+/* Производители */
+.brands {
+  position: sticky;
+  top: 1rem;
+}
+
+.brands__list {
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+}
+
+.brand {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 0.75rem;
+  row-gap: 0.125rem;
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem calc(1rem - 3px);
+  border: 0;
+  border-left: 3px solid transparent;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  color: inherit;
+  text-align: left;
+  transition: background-color 0.15s;
+}
+
+.brand:last-child {
+  border-bottom: 0;
+}
+
+.brand:hover {
+  background: var(--steel);
+}
+
+.brand:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: -2px;
+}
+
+.brand.is-active {
+  border-left-color: var(--signal);
+  background: #fff8e8;
+}
+
+.brand__name {
+  font-weight: 600;
+}
+
+.brand__part {
+  grid-column: 1 / -1;
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+}
+
+.part-no {
+  align-self: start;
+  padding: 0.0625rem 0.375rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--steel);
+  font-family: var(--bs-font-monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* Таблица предложений */
+.offers {
+  --bs-table-bg: #fff;
+  --bs-table-hover-bg: #f8f9fb;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.offers th {
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--steel);
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.offers td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+}
+
+.offers tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.offers .num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.offers__group td {
+  padding: 0.5rem 0.75rem;
+  background: #fafbfc;
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.offers__brand {
+  font-weight: 600;
+}
+
+.offers__price {
+  font-family: var(--bs-font-monospace);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.offers__date {
+  font-family: var(--bs-font-monospace);
+  font-variant-numeric: tabular-nums;
+}
+
+.offers__sub {
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+}
+
+.offers tr.is-out td {
+  color: var(--no-stock);
+}
+
+.stock {
+  display: inline-block;
+  min-width: 2.5rem;
+  padding: 0.0625rem 0.5rem;
+  border-radius: 999px;
+  background: #e7f3ec;
+  color: var(--in-stock);
+  font-family: var(--bs-font-monospace);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.stock.is-empty {
+  background: var(--steel);
+  color: var(--no-stock);
+  font-family: var(--bs-body-font-family);
+}
+
+/* Состояния */
+.state {
+  padding: 2.5rem 1rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* Телефон: строки таблицы — карточки с подписями полей */
+@media (max-width: 767.98px) {
+  .brands {
+    position: static;
+  }
+
+  .brands__list {
+    max-height: 18rem;
+  }
+
+  .offers thead {
+    display: none;
+  }
+
+  .offers,
+  .offers tbody,
+  .offers tr,
+  .offers td {
+    display: block;
+    width: 100%;
+  }
+
+  .offers tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .offers tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  .offers td,
+  .offers tbody tr:last-child td {
+    padding: 0.25rem 0;
+    border: 0;
+  }
+
+  .offers td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--ink-soft);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .offers .cell-wide {
+    grid-column: 1 / -1;
+  }
+
+  /* Производитель и название понятны без подписи: карточка начинается с них */
+  .offers td.cell-plain::before {
+    display: none;
+  }
+
+  .offers td.cell-plain .offers__brand {
+    display: inline;
+    margin-right: 0.5rem;
+  }
+
+  .offers .num {
+    text-align: left;
+  }
+
+  .offers__group {
+    padding: 0 !important;
+  }
+
+  .offers__group td {
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand {
+    transition: none;
+  }
+}

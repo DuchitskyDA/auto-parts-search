@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchBrands, resetSearch } from '../searchSlice';
 
 const MIN_LENGTH = 3;
@@ -8,7 +8,8 @@ const DEBOUNCE_MS = 500;
 // Поиск запускается сам после паузы ввода; Enter — сразу.
 export default function SearchForm() {
   const dispatch = useDispatch();
-  const [value, setValue] = useState('');
+  const lastNumber = useSelector((state) => state.search.number);
+  const [value, setValue] = useState(lastNumber);
   const timer = useRef(null);
   const request = useRef(null);
 
@@ -48,20 +49,26 @@ export default function SearchForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} role="search">
-      <label htmlFor="part-number" className="form-label">
+    <form onSubmit={handleSubmit} role="search" className="panel panel__body">
+      <label htmlFor="part-number" className="search__label">
         Артикул детали
       </label>
-      <input
-        id="part-number"
-        className="form-control form-control-lg"
-        value={value}
-        onChange={handleChange}
-        placeholder="Например, 01089"
-        autoComplete="off"
-        autoFocus
-      />
-      <div className="form-text">Поиск начнётся после ввода {MIN_LENGTH} символов или по Enter.</div>
+      <div className="input-group input-group-lg">
+        <input
+          id="part-number"
+          className="form-control search__input"
+          value={value}
+          onChange={handleChange}
+          placeholder="Например, 01089"
+          autoComplete="off"
+          spellCheck="false"
+          autoFocus
+        />
+        <button type="submit" className="btn btn-ink">
+          Найти
+        </button>
+      </div>
+      <p className="search__hint mb-0">Поиск начнётся сам после {MIN_LENGTH} символов.</p>
     </form>
   );
 }
