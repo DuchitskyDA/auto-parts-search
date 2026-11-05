@@ -7,7 +7,7 @@ import ErrorAlert from './ErrorAlert';
 
 const COLUMNS = 6;
 // API отдаёт все предложения одним ответом; рисуем аналоги порциями, чтобы таблицу можно было читать.
-export const PAGE_SIZE = 50;
+const PAGE_SIZE = 50;
 
 export default function OffersTable() {
   const { selected, offers } = useSelector((state) => state.search);

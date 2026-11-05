@@ -6,7 +6,7 @@
   --line: #dde2e8;
   --signal: #e8a317;
   --in-stock: #1e7f4f;
-  --no-stock: #8a94a3;
+  --no-stock: #646e7c; /* контраст ≥ 4,5:1 на белом и на стальном фоне */
 
   --bs-body-font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --bs-font-monospace: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', monospace;
